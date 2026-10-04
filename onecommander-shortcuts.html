@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OneCommander Shortcuts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: dense spec-sheet. Header bar, filter input, auto-fit grid of titled tables; keycaps left, action right. */
+:root {
+  --bg: #eef0f3;
+  --panel: #f8f9fb;
+  --fg: #14181f;
+  --muted: #5b6573;
+  --line: #cfd5dd;
+  --cap: #ffffff;
+  --cap-line: #b7c0cb;
+  --accent: #1f4fd8;
+  --accent-soft: #dfe7fb;
+  --warn: #9a5b00;
+  --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117; --panel: #141a22; --fg: #dde3ea; --muted: #8592a3; --line: #263040;
+    --cap: #1b2430; --cap-line: #35425a; --accent: #7fa2ff; --accent-soft: #1a2747; --warn: #e0a44a;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117; --panel: #141a22; --fg: #dde3ea; --muted: #8592a3; --line: #263040;
+  --cap: #1b2430; --cap-line: #35425a; --accent: #7fa2ff; --accent-soft: #1a2747; --warn: #e0a44a;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--mono); font-size: 13px; line-height: 1.5;
+  padding-inline: 20px; padding-block: 24px 40px; }
+.wrap { max-width: 1280px; margin: 0 auto; }
+header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px;
+  padding-bottom: 16px; border-bottom: 1px solid var(--fg); }
+h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; margin: 0; }
+h1 span { color: var(--accent); }
+.meta { color: var(--muted); font-size: 12px; text-align: right; }
+.bar { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; padding-block: 14px; }
+.search { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--panel);
+  padding: 7px 10px; min-width: 0; flex: 1 1 260px; max-width: 420px; }
+.search:focus-within { border-color: var(--accent); }
+.search label { color: var(--accent); }
+.search input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: var(--fg); font: inherit; }
+.legend { color: var(--muted); font-size: 12px; display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 16px; align-items: start; }
+section { background: var(--panel); border: 1px solid var(--line); min-width: 0; }
+h2 { margin: 0; padding: 8px 12px; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; }
+h2 b { font-weight: 500; color: var(--accent); }
+table { width: 100%; border-collapse: collapse; }
+td { padding: 6px 12px; vertical-align: top; border-bottom: 1px dashed var(--line); }
+tr:last-child td { border-bottom: 0; }
+td.k { width: 46%; }
+td.d { color: var(--fg); overflow-wrap: anywhere; }
+.alt { display: block; }
+.alt + .alt { margin-top: 4px; }
+.or { color: var(--muted); font-size: 11px; margin-inline: 2px; }
+kbd { font-family: var(--mono); font-size: 11.5px; font-weight: 500; background: var(--cap); border: 1px solid var(--cap-line);
+  border-bottom-width: 2px; padding: 0 5px; margin-right: 2px; display: inline-block; line-height: 1.55; white-space: nowrap; }
+.plus { color: var(--muted); margin-inline: 1px; }
+.tag { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--warn); border: 1px solid var(--warn);
+  padding: 0 4px; margin-left: 6px; white-space: nowrap; }
+.sys { color: var(--accent); }
+tr.hide, section.hide { display: none; }
+.empty { color: var(--muted); padding: 24px 0; }
+footer { margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+footer a { color: var(--accent); }
+.hdr-r { display: flex; align-items: end; gap: 16px; }
+.theme { font: inherit; font-size: 12px; color: var(--fg); background: var(--panel); border: 1px solid var(--line);
+  padding: 4px 10px; cursor: pointer; white-space: nowrap; }
+.theme:hover, .theme:focus-visible { border-color: var(--accent); color: var(--accent); outline: 0; }
+@media (max-width: 520px) { td.k { width: 44%; } header { align-items: start; } .meta { text-align: left; } }
+body{margin:0}
+</style>
+<script>
+// Apply saved theme before first paint to avoid a flash.
+try { const t = localStorage.getItem("oc-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>OneCommander<span>/</span>shortcuts</h1>
+    <div class="hdr-r">
+      <div class="meta">keyboard + mouse reference<br>MMB = middle mouse button</div>
+      <button class="theme" id="theme" type="button" aria-label="Toggle light / dark mode"></button>
+    </div>
+  </header>
+
+  <div class="bar">
+    <div class="search"><label for="q">&gt;</label><input id="q" type="search" placeholder="filter: rename, tab, Ctrl+T ..." autocomplete="off" spellcheck="false"></div>
+    <div class="legend"><span><kbd>A</kbd> / <kbd>B</kbd> alternative keys</span><span><span class="tag">planned</span> not yet available</span></div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty" hidden>no match.</p>
+
+  <footer>Source: <a href="https://onecommander.com/help2/Shortcutkeys.html">onecommander.com/help2/Shortcutkeys.html</a>, cross-checked with DefKey. Reviewed by <a href="https://github.com/m1l">m1l</a>. Shortcuts apply to OneCommander 3. Code: <a href="https://klggr.de">kollege-gruenfeld.de</a></footer>
+</div>
+
+<script>
+// Theme switch: explicit choice overrides the system setting and is remembered.
+const root = document.documentElement, themeBtn = document.getElementById("theme");
+const sysDark = matchMedia("(prefers-color-scheme: dark)");
+const current = () => root.dataset.theme || (sysDark.matches ? "dark" : "light");
+const label = () => { themeBtn.textContent = current() === "dark" ? "[ light ]" : "[ dark ]"; };
+themeBtn.addEventListener("click", () => {
+  const t = current() === "dark" ? "light" : "dark";
+  root.dataset.theme = t;
+  try { localStorage.setItem("oc-theme", t); } catch (e) {}
+  label();
+});
+sysDark.addEventListener("change", label);
+label();
+
+// "|" separates alternative key combos; "+" joins keys in one combo. "~" prefix on desc = planned.
+const DATA = [
+  ["Navigation", [
+    ["Backspace|Alt+Up", "Open parent folder"],
+    ["Alt+Left|Mouse 4", "Previous path"],
+    ["Alt+Right|Mouse 5", "Next path"],
+    ["\\|Alt+D|Ctrl+L", "Edit path"],
+    ["\\ then Ctrl+C", "Edit path, copy it"],
+    ["Ctrl+Shift+C", "Copy current folder path (nothing selected)"],
+    ["Ctrl+Shift+Alt+C", "Copy current path"],
+    ["`", "Toggle columns (standard layout)"],
+    ["F8", "Toggle column resizing (columns layout)"],
+    ["F5|Ctrl+R", "Reload columns"],
+    ["Ctrl+H", "Show / hide hidden files"],
+    ["F7", "Toggle long file names"],
+  ]],
+  ["Open", [
+    ["Enter", "Open file / folder"],
+    ["Ctrl+Enter", "Open with (.exe: run as administrator)"],
+    ["Ctrl+Shift+Enter", "Run .exe with parameters"],
+    ["RMB|Menu|Shift+F10", "Context menu"],
+    ["Shift+RMB", "Context menu, extended options"],
+  ]],
+  ["File operations", [
+    ["F2", "Rename"],
+    ["Ctrl+D", "Duplicate single file"],
+    ["Ctrl+C then Ctrl+V", "Duplicate one or many files"],
+    ["Del", "Delete (Recycle Bin)"],
+    ["Shift+Del", "Delete, skip Recycle Bin"],
+    ["Ctrl+Shift+Del", "~Delete permanently"],
+    ["Ctrl+I|Alt+Enter", "File properties"],
+    ["Ctrl+Alt+T", "Color tag"],
+    ["*", "Quicktag"],
+  ]],
+  ["Create", [
+    ["Ctrl+N", "New file"],
+    ["Ctrl+V", "New file from clipboard (.txt or .png by content)"],
+    ["Ctrl+Shift+N", "New folder"],
+    ["Ctrl+Enter", "Create and open new folder"],
+    ["Shift+Enter", "New folder, move selection into it"],
+    ["Alt+N", "New note"],
+  ]],
+  ["Clipboard", [
+    ["Ctrl+C", "Copy"],
+    ["Ctrl+X", "Cut"],
+    ["Ctrl+V", "Paste"],
+    ["Ctrl+Shift+C", "Copy files as paths"],
+  ]],
+  ["Selection", [
+    ["Ctrl+A", "Select all"],
+    ["Ctrl+LMB|Ctrl+Space", "Add to selection"],
+    ["Shift+LMB", "Select range"],
+    ["MMB+Drag", "Window (marquee) selection"],
+  ]],
+  ["Tabs", [
+    ["Ctrl+T", "New tab (duplicates current)"],
+    ["Ctrl+Shift+T", "New tab from path in clipboard"],
+    ["MMB on folder", "Open folder in new tab"],
+    ["Ctrl+W|MMB on tab", "Close tab"],
+    ["Ctrl+Tab", "Next tab"],
+    ["Ctrl+Shift+Tab", "Previous tab"],
+    ["Alt+MMB", "Move tab to other pane"],
+  ]],
+  ["Dual pane", [
+    ["Alt+F", "Switch focus between browsers"],
+    ["Alt+C", "Copy selection to other browser"],
+    ["Alt+M", "Move selection to other browser"],
+  ]],
+  ["Preview", [
+    ["Space", "Preview file"],
+    ["Esc", "Close preview"],
+    ["Up|Down", "Previous / next file"],
+    ["Left|Right", "PDF: previous / next page"],
+    ["Wheel", "Image zoom around cursor"],
+  ]],
+  ["Search + filter", [
+    ["F3|Ctrl+F", "Search"],
+    ["A-Z|0-9", "Quick filter (type to filter)"],
+    ["Esc", "Clear quick filter"],
+  ]],
+  ["Window + system", [
+    ["Win+Alt+E", "~sys:Call OneCommander (system-wide)"],
+    ["Shift+F1", "Center on main display"],
+    ["Win+Up", "Maximize / restore"],
+    ["Win+Down", "Minimize / restore"],
+    ["~|Shift+`","Show notification pane"],
+    ["Ctrl+Shift+F5", "Reload theme"],
+    ["Ctrl+Shift+F12", "Restart as administrator"],
+  ]],
+  ["Terminal", [
+    ["F10", "Open CMD / PowerShell in current folder"],
+    ["Ctrl+F10", "Open terminal as administrator"],
+  ]],
+];
+
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+function keys(spec) {
+  // spec like "Ctrl+C then Ctrl+V" or alternatives split by "|"
+  return spec.split("|").map(alt => {
+    const html = alt.split(" then ").map(part => {
+      if (/^[^+]*[A-Za-z0-9]+(\+[^+]+)+$/.test(part) || part.includes("+")) {
+        return part.split("+").map(k => "<kbd>" + esc(k) + "</kbd>").join('<span class="plus">+</span>');
+      }
+      return "<kbd>" + esc(part) + "</kbd>";
+    }).join(' <span class="or">then</span> ');
+    return '<span class="alt">' + html + "</span>";
+  }).join("");
+}
+const grid = document.getElementById("grid");
+DATA.forEach(([title, rows]) => {
+  const s = document.createElement("section");
+  const n = rows.length;
+  s.innerHTML = "<h2><span>" + esc(title) + "</span><b>" + n + "</b></h2><table><tbody>" +
+    rows.map(([k, d]) => {
+      let planned = false, sys = false;
+      if (d.startsWith("~sys:")) { sys = true; d = d.slice(5); }
+      else if (d.startsWith("~")) { planned = true; d = d.slice(1); }
+      return '<tr><td class="k">' + keys(k) + '</td><td class="d">' + esc(d) +
+        (sys ? ' <span class="sys">[sys]</span>' : "") + (planned ? '<span class="tag">planned</span>' : "") + "</td></tr>";
+    }).join("") + "</tbody></table>";
+  grid.appendChild(s);
+});
+
+const q = document.getElementById("q"), empty = document.getElementById("empty");
+q.addEventListener("input", () => {
+  const t = q.value.trim().toLowerCase().replace(/\s+/g, " ");
+  let any = false;
+  grid.querySelectorAll("section").forEach(sec => {
+    const secTitle = sec.querySelector("h2 span").textContent.toLowerCase();
+    let shown = 0;
+    sec.querySelectorAll("tr").forEach(tr => {
+      const text = tr.textContent.toLowerCase().replace(/\s+/g, " ");
+      const keyText = tr.querySelector(".k").textContent.toLowerCase();
+      const hit = !t || text.includes(t) || keyText.replace(/\s/g, "").includes(t.replace(/\s/g, "")) || secTitle.includes(t);
+      tr.classList.toggle("hide", !hit);
+      if (hit) shown++;
+    });
+    sec.classList.toggle("hide", shown === 0);
+    if (shown) any = true;
+  });
+  empty.hidden = any;
+});
+</script>
+
+</body>
+</html>
